@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZPS_WBS_PRJ_PRG_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="ProjectCodeSH" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ProjectId"/>
+                </Key>
+                <Property Name="ProjectId" Type="Edm.String" Nullable="false" MaxLength="24" sap:unicode="false" sap:label="Project def."/>
+                <Property Name="ProjectDescription" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Project Definition Name"/>
+            </EntityType>
+            <EntityType Name="WbsElementSH" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Wbs"/>
+                </Key>
+                <Property Name="Wbs" Type="Edm.String" Nullable="false" MaxLength="24" sap:unicode="false" sap:label="WBS Element"/>
+                <Property Name="WbsDescription" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="Description"/>
+            </EntityType>
+            <EntityType Name="ProjectElemsDetail" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ObjectId"/>
+                </Key>
+                <Property Name="Edit" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X = True, - = False, Space = Unknown)"/>
+                <Property Name="Explanation" Type="Edm.String" sap:unicode="false" sap:label="EXPLANATION"/>
+                <Property Name="Magnitude" Type="Edm.Int16" sap:unicode="false" sap:label="MAGNITUDE"/>
+                <Property Name="Overall" Type="Edm.String" sap:unicode="false" sap:label="OVERALL"/>
+                <Property Name="Pspid" Type="Edm.String" sap:unicode="false" sap:label="PSPID"/>
+                <Property Name="RelationType" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag"/>
+                <Property Name="LongText" Type="Edm.String" sap:unicode="false" sap:label="LONG_TEXT"/>
+                <Property Name="Posid" Type="Edm.String" sap:unicode="false" sap:label="POSID"/>
+                <Property Name="StartDatetime" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
+                <Property Name="Aplzl" Type="Edm.String" sap:unicode="false" sap:label="APLZL"/>
+                <Property Name="EndDatetime" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date"/>
+                <Property Name="Color" Type="Edm.String" sap:unicode="false" sap:label="COLOR"/>
+                <Property Name="ObjectId" Type="Edm.String" Nullable="false" sap:unicode="false"/>
+                <Property Name="Drilldownstate" Type="Edm.String" sap:unicode="false" sap:label="DRILLDOWNSTATE"/>
+                <Property Name="HierarchyNodeLevel" Type="Edm.Int16" sap:unicode="false" sap:label="HIERARCHY_NODE_LEVEL"/>
+                <Property Name="Percent" Type="Edm.String" sap:unicode="false" sap:label="PERCENT"/>
+                <Property Name="WbsId" Type="Edm.String" MaxLength="24" sap:unicode="false" sap:label="WBS Element"/>
+                <Property Name="ParentObjectId" Type="Edm.String" sap:unicode="false"/>
+                <Property Name="ProjectId" Type="Edm.String" MaxLength="24" sap:unicode="false" sap:label="Project def."/>
+                <Property Name="StartDate" Type="Edm.String" sap:unicode="false"/>
+                <Property Name="EndDate" Type="Edm.String" sap:unicode="false"/>
+                <Property Name="ObjectName" Type="Edm.String" sap:unicode="false"/>
+                <NavigationProperty Name="Relationships" Relationship="ZPS_WBS_PRJ_PRG_SRV.DetailToRelationship" FromRole="FromRole_DetailToRelationship" ToRole="ToRole_DetailToRelationship"/>
+            </EntityType>
+            <EntityType Name="Relationships" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ObjectId"/>
+                </Key>
+                <Property Name="ObjectId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RelationId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ParentObjectId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PredecTaskId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SuccTaskId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RelationType" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ApproveChange" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ObjectId"/>
+                </Key>
+                <Property Name="ObjectId" Type="Edm.String" Nullable="false" MaxLength="70" sap:unicode="false" sap:label="Char 70" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Overall" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="OVERALL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ParentObjectId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PARENT_OBJECT_ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LongText" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="LONG_TEXT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Magnitude" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="MAGNITUDE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="HierarchyNodeLevel" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="HIERARCHY_NODE_LEVEL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Drilldownstate" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="DRILLDOWNSTATE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Start" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="START" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="End" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="END" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StartDatetime" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EndDatetime" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Percent" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PERCENT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Explanation" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="EXPLANATION" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ObjectName" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="OBJECT_NAME" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pspid" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="PSPID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Posid" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="POSID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aplzl" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="APLZL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Edit" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X = True, - = False, Space = Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RelationType" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Single-Character Flag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Color" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="COLOR" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="DetailToRelationship" sap:content-version="1">
+                <End Type="ZPS_WBS_PRJ_PRG_SRV.ProjectElemsDetail" Multiplicity="1" Role="FromRole_DetailToRelationship"/>
+                <End Type="ZPS_WBS_PRJ_PRG_SRV.Relationships" Multiplicity="*" Role="ToRole_DetailToRelationship"/>
+            </Association>
+            <EntityContainer Name="ZPS_WBS_PRJ_PRG_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ProjectCodeSHSet" EntityType="ZPS_WBS_PRJ_PRG_SRV.ProjectCodeSH" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="WbsElementSHSet" EntityType="ZPS_WBS_PRJ_PRG_SRV.WbsElementSH" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ProjectElemsDetailSet" EntityType="ZPS_WBS_PRJ_PRG_SRV.ProjectElemsDetail" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="RelationshipsSet" EntityType="ZPS_WBS_PRJ_PRG_SRV.Relationships" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ApproveChangeSet" EntityType="ZPS_WBS_PRJ_PRG_SRV.ApproveChange" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="DetailToRelationshipSet" Association="ZPS_WBS_PRJ_PRG_SRV.DetailToRelationship" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ProjectElemsDetailSet" Role="FromRole_DetailToRelationship"/>
+                    <End EntitySet="RelationshipsSet" Role="ToRole_DetailToRelationship"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="https://RISESAPDEV.AIMS.COM:443/sap/opu/odata/sap/ZPS_WBS_PRJ_PRG_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://RISESAPDEV.AIMS.COM:443/sap/opu/odata/sap/ZPS_WBS_PRJ_PRG_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

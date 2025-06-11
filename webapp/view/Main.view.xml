@@ -1,0 +1,384 @@
+<mvc:View
+    controllerName="com.aims.zpswbsprjprg.controller.Main"
+    xmlns="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:m="sap.m"
+    xmlns:gnt="sap.gantt"
+    xmlns:axistime="sap.gantt.axistime"
+    xmlns:config="sap.gantt.config"
+    xmlns:gnt2="sap.gantt.simple"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:l="sap.ui.layout" 
+    xmlns:f="sap.f"
+>
+<f:DynamicPage id="dynamicPage" fitContent="true">
+    <f:title>
+        <f:DynamicPageTitle visible="false">
+            <f:heading>
+                <!-- <m:Title text="{i18n>pageTitle}" level="H1" /> -->
+            </f:heading>
+        </f:DynamicPageTitle>
+    </f:title>
+
+    <f:header>
+        <f:DynamicPageHeader pinnable="true">
+            <!-- <l:VerticalLayout width="100%"> -->
+                <fb:FilterBar reset="onReset" filterContainerWidth="20rem" search="onSearch" showRestoreButton="false" showClearButton="false">
+                    <fb:filterGroupItems>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="{i18n>labelProject}"  visibleInFilterBar="true">
+                            <fb:control>
+                        <m:Input id="idProjectInput" valueHelpRequest="onValueHelpRequestProjectId" showValueHelp="true" />
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                        <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="{i18n>labelPYP}"  visibleInFilterBar="true">
+                            <fb:control>
+                                <m:Input id="idPYPInput" valueHelpRequest="onValueHelpRequestPYP"  showValueHelp="true" />
+                            </fb:control>
+                        </fb:FilterGroupItem>
+                    </fb:filterGroupItems>
+                </fb:FilterBar>
+            <!-- </l:VerticalLayout> -->
+        </f:DynamicPageHeader>
+    </f:header>
+
+        <f:content>
+            <gnt2:GanttChartContainer id="container">
+                <gnt2:toolbar>
+                    <gnt2:ContainerToolbar
+                        showDisplayTypeButton="true"
+                        id="containerToolbar"
+                        ganttSidePanel="onGanttSidePanel"
+                        showSearchButton="false"
+                    />
+                </gnt2:toolbar>
+                <gnt2:ganttCharts>
+                    <gnt2:GanttChartWithTable
+                        id="gantt1"
+                        ghostAlignment="Start"
+                        enableSelectAndDrag="false"
+                        adhocLineLayer="Bottom"
+                        shapeResize="onShapeResize"
+                        shapeDrop="onShapeDrop"
+                        shapeConnect="onShapeConnect"
+                        shapeContextMenu="onShapeContextMenu"
+                        shapeOverRelationship="false"
+                        showExportTableToExcel="true"
+                        enableChartOverflowToolbar="true"
+                        showTextOnGhost="true"
+                        shapePress="onShapePress"
+                        shapeSelectionMode="MultiWithKeyboardAndLasso"
+                        shapeHighlightSettings="{
+                            color: 'red',
+                            strokeWidth: 2,
+                            strokeDasharray: '5,1',
+                            fillOpacity: 0.5,
+                            shapeColor: 'green'
+                        }"
+                        findBy="ObjectName"
+                        findByOperator="OR"
+                        rowHighlightFill="sapUiChartPaletteSequentialHue1Light3"
+                        rowHighlightAndHoverFill="sapUiChartPaletteSequentialHue1Light1"
+                        
+                    >
+                        <gnt2:table>
+                            <TreeTable
+                                id="treeGantt"
+                                selectionMode="Single"
+                                visibleRowCountMode="Auto"
+                                selectionBehavior="RowSelector"
+                                enableColumnReordering="true"
+                                rows="{
+                                    path: '/ProjectElemsDetailSet',
+                                    parameters: {
+                                        operationMode: 'Server',
+                                        rootLevel: 0,
+                                        numberOfExpandedLevels: 3,
+                                        treeAnnotationProperties: {
+                                            hierarchyNodeFor: 'ObjectId',
+                                            hierarchyParentNodeFor: 'ParentObjectId',
+                                            hierarchyLevelFor: 'HierarchyNodeLevel',
+                                            hierarchyDrillStateFor: 'Drilldownstate',
+                                            hierarchyNodeDescendantCountFor: 'Magnitude'
+                                        },
+                                        expand: 'Relationships'
+                                    }
+                                }"
+                            >
+                                <rowSettingsTemplate>
+                                    <gnt2:GanttRowSettings
+                                        rowId="{ObjectId}"
+                                        relationships="{
+                                            path: 'Relationships',
+                                            templateShareable: 'true'
+                                        }"
+                                    >
+                                        <!-- calendars="{path:'data>WorkingTimes', templateShareable: 'true'}"
+                            <gnt2:calendars>
+                                <gnt2:BaseCalendar shapeId="{data>WorkingTimeID}" calendarName="{data>CalendarName}"/>
+                            </gnt2:calendars> -->
+                            <!-- fill="{path: 'ObjectName', formatter: '.getColorByObjectName'}" -->
+                                        <gnt2:shapes1>
+                                            <gnt2:BaseRectangle
+                                                shapeId="{ObjectId}"
+                                                title="{ObjectName} - {Percent}"
+                                                time="{
+                                                    path: 'StartDatetime'
+                                                }"
+                                                endTime="{
+                                                    path: 'EndDatetime'
+                                                }"
+                                                tooltip="{ObjectName}"
+                                                fill="{path: 'Color'}"
+                                                selectedFill="#0955d9"
+                                                fontSize="15"
+                                                fontWeight="bold"
+                                                selectedTitleColor="#F7ADCD"
+                                                resizable="true"
+                                                draggable="true"
+                                                selectable="true"
+                                                hoverable="true"
+                                                connectable="true"
+                                                height="19"
+                                                titleSpacing="20"
+                                                horizontalTextAlignment="Dynamic"
+                                                verticalTextAlignment="Center"
+                                                visible="{= ${StartDatetime} === null &amp;&amp; ${EndDatetime} === null  ? false : true}"
+                                  
+                                            />
+
+                                            <!-- animationSettings="{
+                                                values: '#e9730c;#fabd64;#e9730c;#e9730c',
+                                                duration: '1s'
+                                            }"
+                                            showAnimation="{=${oViewModel>/alert}
+                                                ? ${
+                                                    parts: [{
+                                                        path: 'StartDate',
+                                                        formatter: '.formatDate'
+                                                    }, {
+                                                        path: 'EndDate',
+                                                        formatter: '.formatDate'
+                                                    }],
+                                                    formatter: '.checkStatus'
+                                                }
+                                                : false }"
+                                            highlightable="false" -->
+                               
+                                        </gnt2:shapes1>
+                                        <gnt2:relationships>
+                                            <gnt2:Relationship
+                                                shapeId="{ObjectId}"
+                                                predecessor="{PredecTaskId}"
+                                                successor="{SuccTaskId}"
+                                                type="{RelationType}"
+                                                tooltip="{RelationType}"
+                                                selectable="true"
+                                                hoverable="true"
+                                            />
+                                        </gnt2:relationships>
+                                    </gnt2:GanttRowSettings>
+                                </rowSettingsTemplate>
+                                <columns>
+                                    <!-- <Column>
+                                        <m:Text text="ObjectId" />
+                                        <template>
+                                            <m:Label text="{ObjectId}" />
+                                        </template>
+                                    </Column>
+                                    <Column>
+                                        <m:Text text="ParentObjectId" />
+                                        <template>
+                                            <m:Label text="{ParentObjectId}" />
+                                        </template>
+                                    </Column>
+                                    <Column>
+                                        <m:Text text="HierarchyNodeLevel" />
+                                        <template>
+                                            <m:Label text="{HierarchyNodeLevel}" />
+                                        </template>
+                                    </Column>
+                                    <Column>
+                                        <m:Text text="Magnitude" />
+                                        <template>
+                                            <m:Label text="{Magnitude}" />
+                                        </template>
+                                    </Column> -->
+                                    <Column
+                                        sortProperty="ObjectName"
+                                        filterProperty="ObjectName"
+                                        width="40%"
+                                    >
+                                        <customData>
+                                            <core:CustomData
+                                                key="exportTableColumnConfig"
+                                                value="{
+                                                    columnKey: 'ObjectName',
+                                                    leadingProperty: 'ObjectName',
+                                                    dataType: 'string',
+                                                    hierarchyNodeLevel: 'HierarchyNodeLevel',
+                                                    wrap: true
+                                                }"
+                                            />
+                                        </customData>
+                                        <m:Text text="{i18n>labelObjectName}" />
+                                        <template>
+                                            <m:Label text="{ObjectName}" />
+                                        </template>
+                                    </Column>
+                                    <Column
+                                    sortProperty="Overall"
+                                    filterProperty="Overall"
+                                    width="25%"
+                                >
+                                    <customData>
+                                        <core:CustomData
+                                            key="exportTableColumnConfig"
+                                            value="{
+                                                columnKey: 'Overall',
+                                                leadingProperty: 'Overall',
+                                                dataType: 'string',
+                                                wrap: true
+                                            }"
+                                        />
+                                    </customData>
+                                    <m:Text text="{i18n>labelOverall}" />
+                                    <template>
+                                        <m:Label text="{Overall}" />
+                                    </template>
+                                </Column>
+                                    <!-- <Column>
+                                        <m:Text text="" />
+                                        <template>
+                                            <m:Label text="{RelationType}" />
+                                        </template>
+                                    </Column> -->
+                                    <Column
+                                    sortProperty="Percent"
+                                    filterProperty="Percent"
+                                    width="19%"
+                                >
+                                    <customData>
+                                        <core:CustomData
+                                            key="exportTableColumnConfig"
+                                            value="{
+                                                columnKey: 'Percent',
+                                                leadingProperty: 'Percent',
+                                                dataType: 'string',
+                                                wrap: true
+                                            }"
+                                        />
+                                    </customData>
+                                    <m:Text text="{i18n>labelPercent}" />
+                                    <template>
+                                        <m:Label text="{Percent}" />
+                                    </template>
+                                </Column>
+                                    <Column
+                                        sortProperty="StartDatetime"
+                                        filterProperty="StartDatetime"
+                                        width="34%"
+                                    >
+                                        <customData>
+                                            <core:CustomData
+                                                key="exportTableColumnConfig"
+                                                value="{
+                                                    columnKey: 'StartDatetime',
+                                                    leadingProperty: 'StartDatetime',
+                                                    displayFormat: 'dd.MM.yyyy',
+                                                    dataType: 'stringDate'
+                                                }"
+                                            />
+                                        </customData>
+                                        <m:Text text="{i18n>labelStartDate}" />
+                                        <template>
+                                            <m:DatePicker dateValue="{
+                                                path: 'StartDatetime'
+                                            }" displayFormat="dd.MM.yyyy" editable="false"/>
+                                        </template>
+                                    </Column>
+                                    <Column
+                                        sortProperty="EndDatetime"
+                                        filterProperty="EndDatetime"
+                                        width="34%"
+                                    >
+                                        <customData>
+                                            <core:CustomData
+                                                key="exportTableColumnConfig"
+                                                value="{
+                                                    columnKey: 'EndDatetime',
+                                                    leadingProperty: 'EndDatetime',
+                                                    displayFormat: 'dd.MM.yyyy',
+                                                    dataType: 'stringDate'
+                                                }"
+                                            />
+                                        </customData>
+                                        <m:Text text="{i18n>labelEndDate}" />
+                                        <template>
+                                            <m:DatePicker dateValue="{
+                                                path: 'EndDatetime'
+                                            }" displayFormat="dd.MM.yyyy" editable="false" />
+                                        </template>
+                                    </Column>
+                                <!-- <Column   width="32%">
+                                    <m:Text text="{i18n>labelLongText}" />
+                                    <template>
+                                        <m:TextArea visible="{= ${Edit} === 'X' ? true : false}" value="{LongText}" rows="4" />
+                                    </template>
+                                </Column> -->
+                                <Column   width="2%">
+                                    <m:Text text="" />
+                                    <template>
+                                        <m:Button visible="{= ${Edit} === 'X' ? true : false}" press="onSaveButtonPress" type="Success" icon="sap-icon://save" />
+                                    </template>
+                                </Column>
+                                </columns>
+                                <!-- <extension>
+                                    <m:OverflowToolbar>
+                                        <m:content>
+                                            <m:Button
+                                                icon="sap-icon://expand-all"
+                                                type="Transparent"
+                                                press="handleExpandShape"
+                                            />
+                                            <m:Button
+                                                icon="sap-icon://collapse-all"
+                                                type="Transparent"
+                                                press="handleCollapseShape"
+                                            />
+                                            <m:DatePicker
+                                                id="adhocLine"
+                                                width="200px"
+                                                displayFormat="yyyy-MM-dd"
+                                                valueFormat="yyyyMMddHHmmss"
+                                                change="handleAdhocLineTimeChange"
+                                            />
+                                        </m:content>
+                                    </m:OverflowToolbar>
+                                </extension> -->
+                            </TreeTable>
+                        </gnt2:table>
+                        <!-- <gnt2:simpleAdhocLines>
+                    <gnt2:AdhocLine
+                        stroke="#FF0000"
+                        strokeDasharray="5, 1"
+                        timeStamp="{oViewModel>/Today}"
+                    />
+                </gnt2:simpleAdhocLines> -->
+                        <!-- <gnt2:axisTimeStrategy>
+                    <axistime:ProportionZoomStrategy>
+                        <axistime:totalHorizon>
+                            <config:TimeHorizon startTime="{oViewModel>/StartTimeHorizon}" endTime="{oViewModel>/EndTimeHorizon}"/>
+                        </axistime:totalHorizon>
+                        <axistime:visibleHorizon>
+                            <config:TimeHorizon startTime="{oViewModel>/StartTimeHorizon}" endTime="{oViewModel>/EndTimeHorizon}"/>
+                        </axistime:visibleHorizon>
+                    </axistime:ProportionZoomStrategy>
+                </gnt2:axisTimeStrategy> -->
+                    </gnt2:GanttChartWithTable>
+                </gnt2:ganttCharts>
+            </gnt2:GanttChartContainer>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

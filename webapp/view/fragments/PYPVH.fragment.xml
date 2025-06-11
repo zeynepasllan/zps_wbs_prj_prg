@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		noDataText=""
+		title="{i18n>titleSelectPYP}"
+		search=".onPYPSearch"
+        contentHeight="60%"
+        contentWidth="40%"
+		confirm=".onPYPDialogClose"
+		cancel=".onPYPDialogClose"
+		items="{
+			path: '/WbsElementSHSet'
+		}">
+		<StandardListItem
+			title="{WbsDescription}"
+			description="{Wbs}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

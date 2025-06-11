@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		noDataText=""
+		title="{i18n>titleSelectProject}"
+		search=".onProjectSearch"
+        contentHeight="60%"
+        contentWidth="40%"
+		confirm=".onProjectDialogClose"
+		cancel=".onProjectDialogClose"
+		items="{
+			path: '/ProjectCodeSHSet'
+		}">
+		<StandardListItem
+			title="{ProjectDescription}"
+			description="{ProjectId}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>
