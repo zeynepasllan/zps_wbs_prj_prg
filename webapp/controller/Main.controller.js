@@ -413,7 +413,7 @@ sap.ui.define([
                     // LongText: oEvent.getSource().getParent().getRowBindingContext().getObject().LongText,
                     ObjectName: oEvent.getSource().getParent().getRowBindingContext().getObject().ObjectName,
                     Pspid: oEvent.getSource().getParent().getRowBindingContext().getObject().Pspid,
-                    Posid: oEvent.getSource().getParent().getRowBindingContext().getObject().Posid,
+                    Posid: oEvent.getSource().getParent().getRowBindingContext().getObject().Posid, 
                     Aplzl: oEvent.getSource().getParent().getRowBindingContext().getObject().Aplzl,
                     // Edit: oEvent.getSource().getParent().getRowBindingContext().getObject().ObjectId,
                     // RelationType: oEvent.getSource().getParent().getRowBindingContext().getObject().ObjectId,
