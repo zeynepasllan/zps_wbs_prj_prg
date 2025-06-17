@@ -272,7 +272,7 @@
                                     </customData>
                                     <m:Text text="{i18n>labelPercent}" />
                                     <template>
-                                        <m:Label text="{Percent}" />
+                                        <m:Input value="{Percent}" editable="{= ${Edit} === 'X' ? true : false}"/>
                                     </template>
                                 </Column>
                                     <Column
@@ -295,7 +295,7 @@
                                         <template>
                                             <m:DatePicker dateValue="{
                                                 path: 'StartDatetime'
-                                            }" displayFormat="dd.MM.yyyy" editable="false"/>
+                                            }" displayFormat="dd.MM.yyyy" editable="{= ${Edit} === 'X' ? true : false}"/>
                                         </template>
                                     </Column>
                                     <Column
@@ -318,7 +318,7 @@
                                         <template>
                                             <m:DatePicker dateValue="{
                                                 path: 'EndDatetime'
-                                            }" displayFormat="dd.MM.yyyy" editable="false" />
+                                            }" displayFormat="dd.MM.yyyy" editable="{= ${Edit} === 'X' ? true : false}" />
                                         </template>
                                     </Column>
                                 <!-- <Column   width="32%">
